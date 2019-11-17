@@ -7,9 +7,11 @@
     </button>
   </label>
 </div>
-
+<div *ngIf="currentHero">
+  Currently selected: {{currentHero.name}}
+</div>
 <ul class="heroes">
-    <li *ngFor="let hero of heroes">
+    <li *ngFor="let hero of heroes" (mouseover)="currentHero = hero" (mouseout)="currentHero = null">
         <a routerLink="/detail/{{hero.id}}">
             <span class="badge">{{hero.id}}</span> {{hero.name}}
         </a>
@@ -17,6 +19,8 @@
                 (click)="delete(hero)">x</button>
     </li>
 </ul>
+
+
 
 <div>
     <label>Hero name:
