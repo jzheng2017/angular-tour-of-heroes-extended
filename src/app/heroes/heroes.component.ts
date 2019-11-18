@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Hero} from '../hero';
 import {HeroService} from '../hero.service';
+import {MessageService} from '../message.service';
 
 @Component({
   selector: 'app-heroes',
@@ -11,7 +12,7 @@ export class HeroesComponent implements OnInit {
   heroes: Hero[];
   currentHero: Hero;
 
-  constructor(private heroService: HeroService) {
+  constructor(private heroService: HeroService, private messageService: MessageService) {
   }
 
   getHeroes(): void {
@@ -39,6 +40,9 @@ export class HeroesComponent implements OnInit {
   }
 
   filter(value: string) {
-    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes.filter(h => h.name.indexOf(value) >= 0));
+    this.heroService.getHeroes().subscribe(heroes => {
+      this.heroes = heroes.filter(h => h.name.indexOf(value) >= 0);
+      this.messageService.add(this.heroes.length + ' results found');
+    });
   }
 }
